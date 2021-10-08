@@ -1,0 +1,9 @@
+.t-primary {
+    color: #1473E6;
+    font-weight: bold;
+}
+
+.b-primary {
+    background-color: hsl(213, 84%, 49%);
+    color: #FFFFFF;
+}

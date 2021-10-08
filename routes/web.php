@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdmnistratorController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UserController::class, 'login']);
+
+Route::post('/auth', [UserController::class, 'auth'])->name('auth.user');
+
+Route::resource('/admin', AdmnistratorController::class);

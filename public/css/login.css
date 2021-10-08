@@ -1,0 +1,54 @@
+body {
+    background-color: #FFFFFF;
+}
+#main {
+    margin-top: 25vh;
+}
+#box_email,
+#box_password {
+    position: relative;
+}
+.title-login {
+    max-width: 502.83px;
+    max-height: 75.05px;
+    font-size: 30px;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: bold;
+}
+.label-email,
+.label-senha {
+    position: absolute;
+    top: 3px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    padding: 12px 0px 0px 27px;
+    color: rgba(0, 0, 0, 0.61);
+}
+.input-login {
+    width: 554px;
+    height: 74px;
+    border: 1px solid #C1BBBB;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    padding: 22px 0px 0px 27px;
+}
+.b-login {
+    width: 554px;
+    height: 54px;
+    border: none;
+    margin-top: 12px;
+    box-shadow: 0 4px 3px  rgba(0, 0, 0, 0.25);
+    font-size: 18px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 21px;
+}
