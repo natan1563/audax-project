@@ -49,6 +49,10 @@
             background: #F9F9F9;
             border: 0.649342px solid #D2D2D2;
         }
+
+        .boxDetailApprover {
+            width: 47%;
+        }
     </style>
 @endsection
 

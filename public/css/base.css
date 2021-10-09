@@ -37,6 +37,15 @@ textarea {
     border-radius: 5.88102px;
 }
 
+.b-danger,
+.b-success {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16.6629px;
+    line-height: 23px;
+    color: #FFFFFF;
+}
 .btn-approver {
     position: absolute;
     top: 0;

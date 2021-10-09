@@ -12,7 +12,7 @@
     @include('layout.search_and_create', [
         'buttonAdd' => 'Nova solicitação',
         'user' => $user
-        ]);
+        ])
 @endsection
 
 @section('table')

@@ -46,7 +46,7 @@ class ApproverController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('approver.request_details');
     }
 
     /**

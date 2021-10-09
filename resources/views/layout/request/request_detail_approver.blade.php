@@ -1,3 +1,16 @@
+
+<div class="row d-flex justify-content-between mt-5 px-3">
+    <div class="boxDetailApprover">
+        <label for="solicitor">Solicitador</label>
+        <input type="text" class="form-control" value="Obi-wan-Kenobi" disabled>
+    </div>
+
+    <div class="boxDetailApprover">
+        <label for="solicitor">Data da solicitação</label>
+        <input type="text" class="form-control" value="14/10/2021" disabled>
+    </div>
+</div>
+
 <p class="mt-5">Materiais solicitados</p>
 
 <div class="w-100 row col-md-12">
@@ -24,7 +37,8 @@
 
     <div class="col col-md-12 d-flex flex-column-reverse mt-5">
         <div class="form-row flex-row-reverse">
-            <a href="#" class="btn b-primary btn-md ml-2 p-2 px-5">Voltar</a>
+            <a href="#" class="btn b-success btn-md ml-2 p-2 px-5">Aprovar</a>
+            <a href="#" class="btn b-danger btn-md ml-2 p-2 px-5">Reprovar</a>
         </div>
     </div>
 </form>
