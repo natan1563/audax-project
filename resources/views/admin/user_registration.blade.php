@@ -9,5 +9,5 @@
 @endsection
 
 @section('content')
-    @include('layout.user.form_register', ['buttonAdd' => 'Novo usuário'])
+    @include('layout.user.form_register')
 @endsection

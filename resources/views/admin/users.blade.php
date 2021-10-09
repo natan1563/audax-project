@@ -11,10 +11,12 @@
 @section('content')
     @include('layout.search_and_create', [
         'buttonAdd' => 'Novo usuário',
-        'user' => $user
+        'buttonPath' => '/users/create'
         ])
 @endsection
 
 @section('table')
-    @include('layout.user.table_users')
+    @include('layout.user.table_users', [
+         'users' => $users
+    ])
 @endsection

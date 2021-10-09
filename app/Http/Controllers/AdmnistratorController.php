@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdmnistratorController extends Controller
 {
@@ -11,10 +14,28 @@ class AdmnistratorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $queryByName = $request->input('inputSearch');
+
+        switch(true) {
+            case (!is_null($queryByName)):
+                $users = User::query()
+                    ->where('name', 'LIKE', "%{$queryByName}%")
+                    ->orderBy('id', 'DESC')
+                    ->take(10)
+                    ->get();
+            break;
+
+            default:
+                $users = User::query()
+                    ->orderBy('id', 'DESC')
+                    ->take(10)
+                    ->get();
+        }
+
         $user = 'admin';
-        return view('admin/users', compact('user'));
+        return view('admin/users', compact('users', 'user'));
     }
 
     /**
@@ -22,8 +43,9 @@ class AdmnistratorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+
         return view('admin.user_registration');
     }
 
@@ -33,9 +55,25 @@ class AdmnistratorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $user = new User;
+
+        if ($user->where('email', $request->get('inputEmail'))->count())
+            return redirect('/users'); // MENSAGEM DE EMAIL DUPLICADO
+
+        $user->name     = $request->get('inputName');
+        $user->type_user= $request->get('inputFunction');
+        $user->email    = $request->get('inputEmail');
+        $user->password = Hash::make($request->get('inputPassword'));
+        $user->save();
+
+        $request->session()->flash(
+            'mensagem',
+            "Usuário criado com sucesso!"
+        );
+
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +118,7 @@ class AdmnistratorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return redirect()->back();
     }
 }

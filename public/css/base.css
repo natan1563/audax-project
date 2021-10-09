@@ -17,6 +17,7 @@ textarea {
 
 .b-primary {
     background-color: hsl(213, 84%, 49%);
+    text-decoration: none;
     color: #FFFFFF;
 }
 

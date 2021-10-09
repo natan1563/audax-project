@@ -31,6 +31,7 @@
             font-weight: bold;
             font-size: 14px;
             line-height: 19px;
+            color: #FFFFFF;
         }
         #olho {
             width: 36px;
