@@ -13,7 +13,8 @@ class AdmnistratorController extends Controller
      */
     public function index()
     {
-        return view('admin/users');
+        $user = 'admin';
+        return view('admin/users', compact('user'));
     }
 
     /**

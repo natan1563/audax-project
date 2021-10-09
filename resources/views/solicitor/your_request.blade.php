@@ -9,5 +9,5 @@
 @endsection
 
 @section('content')
-    @include('layout.request.form_request')
+    @include('layout.request.request_detail')
 @endsection

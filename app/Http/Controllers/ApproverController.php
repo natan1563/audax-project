@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class MaterialController extends Controller
+class ApproverController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        $user = 'admin';
-        return view('admin.materials', compact('user'));
+        $user = 'approver';
+        return view('approver.requests', compact('user'));
     }
 
     /**
@@ -24,7 +24,7 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        return view('admin.materials_registration');
+        //
     }
 
     /**

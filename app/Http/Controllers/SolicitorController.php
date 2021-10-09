@@ -13,7 +13,8 @@ class SolicitorController extends Controller
      */
     public function index()
     {
-        return view('solicitor.requests');
+        $user = 'admin';
+        return view('solicitor.requests', compact('user'));
     }
 
     /**
@@ -45,7 +46,7 @@ class SolicitorController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('solicitor.your_request');
     }
 
     /**

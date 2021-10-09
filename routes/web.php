@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdmnistratorController;
+use App\Http\Controllers\ApproverController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\SolicitorController;
 use App\Http\Controllers\UserController;
@@ -26,3 +27,5 @@ Route::resource('/users', AdmnistratorController::class);
 Route::resource('/materials', MaterialController::class);
 
 Route::resource('/solicitor', SolicitorController::class);
+
+Route::resource('/approver', ApproverController::class);

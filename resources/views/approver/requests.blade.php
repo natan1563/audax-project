@@ -1,20 +1,20 @@
 @extends('template.template_module')
 
 @section('sidebar')
-    @include('layout.sidebar_admin')
+    @include('layout.sidebar_requests')
 @endsection
 
 @section('titleModule')
-    Materiais
+    Solicitações
 @endsection
 
 @section('content')
     @include('layout.search_and_create', [
-        'buttonAdd' => 'Novo material',
+        'buttonAdd' => 'New Post',
         'user' => $user
-        ]);
+        ])
 @endsection
 
 @section('table')
-    @include('layout.material.material_table')
+    @include('layout.request.table_requests')
 @endsection

@@ -2,6 +2,14 @@ body {
     background-color: #FFFFFF;
 }
 
+textarea {
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    padding: 10px;
+    border-width: 0;
+}
+
 .t-primary {
     color: #1473E6;
     font-weight: bold;
@@ -15,4 +23,24 @@ body {
 .b-secondary {
     background-color: #F9F9F9;
     color: #636363;
+}
+
+.b-danger {
+    background: #FB2B3F;
+    border: 0.768173px solid #D2D2D2;
+    box-sizing: border-box;
+    border-radius: 5.88102px;
+}
+
+.b-success {
+    background: #0DE67B;
+    border-radius: 5.88102px;
+}
+
+.btn-approver {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 30px;
+    margin-right: 50px;
 }

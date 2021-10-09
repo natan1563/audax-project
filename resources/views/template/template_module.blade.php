@@ -19,6 +19,9 @@
             padding-left: 3%;
             max-width: 250px;
         }
+        #boxSearch {
+            min-width: 300px;
+        }
         #inputSearch {
             max-width: 600px;
         }
@@ -41,7 +44,8 @@
             line-height: 68px;
             color: #7A7A7A;
         }
-        .form-control {
+        .form-control,
+        #labelCheckInput span {
             background: #F9F9F9;
             border: 0.649342px solid #D2D2D2;
         }

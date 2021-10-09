@@ -9,7 +9,10 @@
 @endsection
 
 @section('content')
-    @include('layout.search_and_create', ['buttonAdd' => 'Novo usuário'])
+    @include('layout.search_and_create', [
+        'buttonAdd' => 'Nova solicitação',
+        'user' => $user
+        ]);
 @endsection
 
 @section('table')
