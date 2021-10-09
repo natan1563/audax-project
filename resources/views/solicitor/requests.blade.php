@@ -1,11 +1,11 @@
 @extends('template.template_module')
 
 @section('sidebar')
-    @include('layout.sidebar_admin')
+    @include('layout.sidebar_requests')
 @endsection
 
 @section('titleModule')
-    Usuários
+    Solicitações
 @endsection
 
 @section('content')
@@ -13,5 +13,5 @@
 @endsection
 
 @section('table')
-    @include('layout.user.table_users')
+    @include('layout.request.table_requests')
 @endsection

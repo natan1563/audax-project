@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AdmnistratorController extends Controller
+class MaterialController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class AdmnistratorController extends Controller
      */
     public function index()
     {
-        return view('admin/users');
+        return view('admin.materials');
     }
 
     /**
@@ -23,7 +23,7 @@ class AdmnistratorController extends Controller
      */
     public function create()
     {
-        return view('admin.user_registration');
+        return view('admin.materials_registration');
     }
 
     /**

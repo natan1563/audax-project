@@ -1,4 +1,4 @@
-@extends('layout.template')
+@extends('template.template_base')
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/login.css')}}">
 @endsection

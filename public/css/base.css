@@ -1,3 +1,7 @@
+body {
+    background-color: #FFFFFF;
+}
+
 .t-primary {
     color: #1473E6;
     font-weight: bold;
@@ -6,4 +10,9 @@
 .b-primary {
     background-color: hsl(213, 84%, 49%);
     color: #FFFFFF;
+}
+
+.b-secondary {
+    background-color: #F9F9F9;
+    color: #636363;
 }

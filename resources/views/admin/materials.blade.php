@@ -5,13 +5,13 @@
 @endsection
 
 @section('titleModule')
-    Usuários
+    Materiais
 @endsection
 
 @section('content')
-    @include('layout.search_and_create', ['buttonAdd' => 'Novo usuário'])
+    @include('layout.search_and_create', ['buttonAdd' => 'Novo material'])
 @endsection
 
 @section('table')
-    @include('layout.user.table_users')
+    @include('layout.material.material_table')
 @endsection

@@ -23,7 +23,7 @@ class UserController extends Controller
         ];
 
         if(Auth::attempt($bindCredentials)) {
-
+            return redirect('/admin');
         }
 
         return redirect()->back()->with('danger', 'E-mail ou senha inválida');

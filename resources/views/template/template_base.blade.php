@@ -6,7 +6,6 @@
 
     <title>Audax</title>
 
-    <!-- Fonts -->
     <link href="https://fonts.google.com/specimen/Open+Sans?query=open+sans" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
     <link rel="stylesheet" href="{{ asset('css/base.css')}}">

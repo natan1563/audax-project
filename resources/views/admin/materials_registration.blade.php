@@ -5,13 +5,9 @@
 @endsection
 
 @section('titleModule')
-    Usuários
+    Cadastrar material
 @endsection
 
 @section('content')
-    @include('layout.search_and_create', ['buttonAdd' => 'Novo usuário'])
-@endsection
-
-@section('table')
-    @include('layout.user.table_users')
+    @include('layout.material.form_register', ['buttonAdd' => 'Novo material'])
 @endsection
