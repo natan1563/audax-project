@@ -17,11 +17,14 @@ class CreateRequestsTable extends Migration
             $table->bigIncrements('id');
             $table->text('materials');
             $table->enum('status', ['waiting', 'reproved', 'approved']);
-            $table->text('observation');
+            $table->text('observation')->nullable();
             $table->timestamp('created_at');
-            $table->integer('approver_id');
+            $table->integer('approver_id')->nullable();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

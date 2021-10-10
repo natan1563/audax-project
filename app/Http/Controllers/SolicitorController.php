@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Material;
+use App\Models\Request as Solicitor;
+use DateTime;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\PseudoTypes\HtmlEscapedString;
 
 class SolicitorController extends Controller
 {
@@ -11,10 +15,31 @@ class SolicitorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $queryByName = $request->input('inputSearch');
+        switch(true) {
+            case (!is_null($queryByName)):
+                $requests = Solicitor::query()
+                            ->where('name', 'LIKE', "%{$queryByName}%")
+                            ->join('users', 'requests.user_id', '=', 'users.id')
+                            ->select('users.name', 'users.id AS user_id', 'requests.id AS request_id', 'requests.status', 'requests.created_at')
+                            ->orderBy('request_id', 'DESC')
+                            ->take(10)
+                            ->get();
+            break;
+
+            default:
+                $requests = Solicitor::query()
+                                ->orderBy('request_id', 'DESC')
+                                ->join('users', 'requests.user_id', '=', 'users.id')
+                                ->select('users.name', 'users.id AS user_id', 'requests.id AS request_id', 'requests.status', 'requests.created_at')
+                                ->take(10)
+                                ->get();
+        }
+
         $user = 'admin';
-        return view('solicitor.requests', compact('user'));
+        return view('solicitor.requests', compact('user', 'requests'));
     }
 
     /**
@@ -24,7 +49,8 @@ class SolicitorController extends Controller
      */
     public function create()
     {
-        return view('solicitor.create_request');
+        $materials = Material::all();
+        return view('solicitor.create_request', compact('materials'));
     }
 
     /**
@@ -35,7 +61,29 @@ class SolicitorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'inputMaterial' => 'required'
+        ]);
+
+        $checkeds = $request->get('inputMaterial');
+        $data = [];
+
+        foreach ($checkeds as $id => $name) {
+           array_push($data, [
+                'id' => $id,
+                'name' => $name,
+                'user_id' => 1 // TROCAR PRO DA SESSÃO
+            ]);
+        }
+
+        $solicitation = new Solicitor;
+        $solicitation->materials  = json_encode($data);
+        $solicitation->status     = 'waiting';
+        $solicitation->created_at = new DateTime();
+        $solicitation->user_id    = 1; // TROCAR PELO DA SESSÃO
+        $solicitation->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -46,7 +94,11 @@ class SolicitorController extends Controller
      */
     public function show($id)
     {
-        return view('solicitor.your_request');
+        $requests = Solicitor::find($id);
+        $materials = Material::all();
+        $materialsSelected = json_decode($requests->materials, true);
+
+        return view('solicitor.your_request', compact('requests', 'materials', 'materialsSelected'));
     }
 
     /**

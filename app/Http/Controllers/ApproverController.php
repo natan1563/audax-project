@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Material;
+use App\Models\Request as Solicitor;
 use Illuminate\Http\Request;
 
 class ApproverController extends Controller
@@ -11,10 +13,31 @@ class ApproverController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $queryByName = $request->input('inputSearch');
+        switch(true) {
+            case (!is_null($queryByName)):
+                $requests = Solicitor::query()
+                            ->where('name', 'LIKE', "%{$queryByName}%")
+                            ->join('users', 'requests.user_id', '=', 'users.id')
+                            ->select('users.name', 'users.id AS user_id', 'requests.id AS request_id', 'requests.status', 'requests.created_at')
+                            ->orderBy('request_id', 'DESC')
+                            ->take(10)
+                            ->get();
+            break;
+
+            default:
+                $requests = Solicitor::query()
+                                ->orderBy('request_id', 'DESC')
+                                ->join('users', 'requests.user_id', '=', 'users.id')
+                                ->select('users.name', 'users.id AS user_id', 'requests.id AS request_id', 'requests.status', 'requests.created_at')
+                                ->take(10)
+                                ->get();
+        }
+
         $user = 'approver';
-        return view('approver.requests', compact('user'));
+        return view('approver.requests', compact('user', 'requests'));
     }
 
     /**
@@ -46,9 +69,22 @@ class ApproverController extends Controller
      */
     public function show($id)
     {
-        return view('approver.request_details');
+        $requests = Solicitor::find($id);
+        $materials = Material::all();
+        $materialsSelected = json_decode($requests->materials, true);
+
+        return view('approver.request_details',compact('requests', 'materials', 'materialsSelected'));
     }
 
+    public function approve($id)
+    {
+        $solicitor = Solicitor::find($id);
+        $solicitor->status = 'approved';
+        $solicitor->approver_id = 1; // TROCAR PELO DA SESSAO
+        $solicitor->save();
+
+        return redirect()->back();
+    }
     /**
      * Show the form for editing the specified resource.
      *

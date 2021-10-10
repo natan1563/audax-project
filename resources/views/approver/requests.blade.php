@@ -16,5 +16,7 @@
 @endsection
 
 @section('table')
-    @include('layout.request.table_requests')
+    @include('layout.request.table_requests', [
+        'actionPath' => '/approver'
+    ])
 @endsection

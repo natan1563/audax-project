@@ -11,10 +11,13 @@
 @section('content')
     @include('layout.search_and_create', [
         'buttonAdd' => 'Nova solicitação',
+        'buttonPath' => '/solicitor/create',
         'user' => $user
         ])
 @endsection
 
 @section('table')
-    @include('layout.request.table_requests')
+    @include('layout.request.table_requests', [
+        'actionPath' => '/solicitor'
+    ])
 @endsection

@@ -6,16 +6,25 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="border">
-        <td>Anakin Skywalker</td>
-        <td>
+     @foreach ($materials as $material)
+     <tr class="border">
+        <td>{{ ucfirst($material->name) }}</td>
+        <td class="d-flex flex-row border-0">
             <a href="#">
-                <img src="{{ asset('icons/editar_icon.svg') }}" alt="Editar Usuário">
+                <img src="{{ asset('icons/editar_icon.svg') }}" alt="Editar Material">
             </a>
-            <a href="#" class="ml-1">
-                <img src="{{ asset('icons/lixo_icon.svg') }}" alt="Exclui Usuário">
-            </a>
+            <form
+            onsubmit="return confirm('Tem certeza que deseja excluir o material {{addslashes($material->name)}}?')"
+            action="/materials/{{$material->id}}"
+            method="post">
+            @csrf
+            @method('DELETE')
+                    <button type="submit" class="ml-4 bg-light border-0">
+                        <img src="{{ asset('icons/lixo_icon.svg') }}" title="Excluir Material" alt="Excluir Material">
+                    </button>
+            </form>
         </td>
       </tr>
+     @endforeach
     </tbody>
 </table>

@@ -29,3 +29,5 @@ Route::resource('/materials', MaterialController::class);
 Route::resource('/solicitor', SolicitorController::class);
 
 Route::resource('/approver', ApproverController::class);
+
+Route::get('/approver/aprove/{id}', [ApproverController::class, 'approve']);

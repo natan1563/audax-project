@@ -45,7 +45,6 @@ class AdmnistratorController extends Controller
      */
     public function create(Request $request)
     {
-
         return view('admin.user_registration');
     }
 

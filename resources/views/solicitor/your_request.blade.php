@@ -5,7 +5,7 @@
 @endsection
 
 @section('titleModule')
-    Nova solicitação
+    Sua solicitação
 @endsection
 
 @section('content')

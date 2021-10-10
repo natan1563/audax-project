@@ -11,10 +11,13 @@
 @section('content')
     @include('layout.search_and_create', [
         'buttonAdd' => 'Novo material',
+        'buttonPath' => '/materials/create',
         'user' => $user
-        ]);
+        ])
 @endsection
 
 @section('table')
-    @include('layout.material.material_table')
+    @include('layout.material.material_table',[
+        'materials' => $materials
+    ])
 @endsection

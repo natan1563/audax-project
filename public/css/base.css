@@ -15,6 +15,14 @@ textarea {
     font-weight: bold;
 }
 
+.t-success {
+    color: #0DE67B;
+}
+
+.t-danger {
+    color: #FB2B3F;
+}
+
 .b-primary {
     background-color: hsl(213, 84%, 49%);
     text-decoration: none;

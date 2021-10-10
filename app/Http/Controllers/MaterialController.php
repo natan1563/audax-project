@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MaterialRequest;
+use App\Models\Material;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
@@ -11,10 +13,29 @@ class MaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $queryByName = $request->input('inputSearch');
+
+        switch(true) {
+            case (!is_null($queryByName)):
+                $materials = Material::query()
+                            ->where('name', 'LIKE', "%{$queryByName}%")
+                            ->orderBy('id', 'DESC')
+                            ->take(10)
+                            ->get();
+            break;
+
+            default:
+                $materials = Material::query()
+                                ->orderBy('id', 'DESC')
+                                ->take(10)
+                                ->get();
+        }
+
+
         $user = 'admin';
-        return view('admin.materials', compact('user'));
+        return view('admin.materials', compact('user', 'materials'));
     }
 
     /**
@@ -33,9 +54,20 @@ class MaterialController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MaterialRequest $request)
     {
-        //
+        $material = new Material; // MENSAGEM DE EMAIL DUPLICADO
+
+        $material->name = $request->get('inputName');
+        $material->user_id = 57; // TROCAR
+        $material->save();
+
+        $request->session()->flash(
+            'mensagem',
+            "Material criado com sucesso!"
+        );
+
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +112,7 @@ class MaterialController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Material::destroy($id);
+        return redirect()->back();
     }
 }

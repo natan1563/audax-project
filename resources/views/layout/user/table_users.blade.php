@@ -13,7 +13,7 @@
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
         @include('layout.type_user', ['type' => $user->type_user])
-        <td class="d-flex flex-row">
+        <td class="d-flex flex-row border-0">
             <a href="#">
                 <img src="{{ asset('icons/editar_icon.svg') }}" title="Editar Usuário" alt="Editar Usuário">
             </a>
