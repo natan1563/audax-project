@@ -1,6 +1,6 @@
 <div class="col-md-2 d-flex flex-column justify-content-around" id="sidebar">
     <div class="row">
-        <a href="/approver" class="w-100">
+        <a href="/{{Auth::user()->type_user}}" class="w-100">
             <img src="{{ asset('icons/solicitacoes_icone.svg') }}" class="pr-3" alt="Solicitações">
             <span>Solicitações</span>
         </a>

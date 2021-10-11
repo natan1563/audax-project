@@ -1,12 +1,5 @@
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+@include('helpers.errors')
+@include('helpers.success')
 
 <form
     method="post"
@@ -20,7 +13,11 @@
         </div>
         <div class="form-group col-md-6">
           <label for="inputFunction">Função</label>
-          <input type="text" class="form-control" id="inputFunction" name="inputFunction"  required>
+          <select id="inputFunction" class="form-control form-control-lg" name="inputFunction" required>
+              <option value="solicitor">Solicitador</option>
+              <option value="approver">Aprovador</option>
+              <option value="admin">Administrador</option>
+          </select>
         </div>
     </div>
 

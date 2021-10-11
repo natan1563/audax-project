@@ -1,3 +1,6 @@
+@include('helpers.errors')
+@include('helpers.success')
+
 <p class="mt-5">Solicitação de materiais</p>
 @if (count($materials) > 0)
 <form method="post" action="/solicitor" class="w-100 row col-md-12">

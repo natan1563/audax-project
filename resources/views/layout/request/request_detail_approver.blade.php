@@ -1,4 +1,7 @@
 
+@include('helpers.errors')
+@include('helpers.success')
+
 <div class="row d-flex justify-content-between mt-5 px-3">
     <div class="boxDetailApprover">
         <label for="solicitor">Solicitador</label>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MaterialRequest;
 use App\Models\Material;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class MaterialController extends Controller
     public function index(Request $request)
     {
         $queryByName = $request->input('inputSearch');
+        $success = $request->session()->get('success');
 
         switch(true) {
             case (!is_null($queryByName)):
@@ -36,7 +38,7 @@ class MaterialController extends Controller
 
 
         $user = 'admin';
-        return view('admin.materials', compact('user', 'materials'));
+        return view('admin.materials', compact('user', 'materials', 'success'));
     }
 
     /**
@@ -44,9 +46,10 @@ class MaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.materials_registration');
+        $success = $request->session()->get('success');
+        return view('admin.materials_registration', compact('success'));
     }
 
     /**
@@ -57,14 +60,14 @@ class MaterialController extends Controller
      */
     public function store(MaterialRequest $request)
     {
-        $material = new Material; // MENSAGEM DE EMAIL DUPLICADO
+        $material = new Material;
 
         $material->name = $request->get('inputName');
-        $material->user_id = Auth::user()->id; // TROCAR
+        $material->user_id = Auth::user()->id;
         $material->save();
 
         $request->session()->flash(
-            'mensagem',
+            'success',
             "Material criado com sucesso!"
         );
 
@@ -111,9 +114,17 @@ class MaterialController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Material::destroy($id);
-        return redirect()->back();
+        try {
+            if (!Material::destroy($id)) throw new Exception('Falha ao remover o material');
+            $request->session()->flash(
+                    'success',
+                    "Material removido sucesso!"
+            );
+            return redirect()->back();
+        } catch (Exception $e) {
+            return redirect()->back()->withErrors($e->getMessage());
+        }
     }
 }

@@ -1,3 +1,5 @@
+@include('helpers.errors')
+@include('helpers.success')
 <form method="post" action="/materials" class="mt-5">
     @csrf
     <div class="form-row">

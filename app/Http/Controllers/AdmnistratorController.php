@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,6 +18,7 @@ class AdmnistratorController extends Controller
     public function index(Request $request)
     {
         $queryByName = $request->input('inputSearch');
+        $success = $request->session()->get('success');
 
         switch(true) {
             case (!is_null($queryByName)):
@@ -35,7 +37,7 @@ class AdmnistratorController extends Controller
         }
 
         $user = 'admin';
-        return view('admin/users', compact('users', 'user'));
+        return view('admin/users', compact('users', 'user', 'success'));
     }
 
     /**
@@ -45,7 +47,8 @@ class AdmnistratorController extends Controller
      */
     public function create(Request $request)
     {
-        return view('admin.user_registration');
+        $success = $request->session()->get('success');
+        return view('admin.user_registration', compact('success'));
     }
 
     /**
@@ -58,8 +61,12 @@ class AdmnistratorController extends Controller
     {
         $user = new User;
 
-        if ($user->where('email', $request->get('inputEmail'))->count())
-            return redirect('/users'); // MENSAGEM DE EMAIL DUPLICADO
+        switch(true) {
+            case (!in_array($request->get('inputFunction'), ['admin', 'solicitor', 'approver'])):
+                return redirect()->back()->withErrors('Tipo de usuário não confere.');
+            case ($user->where('email', $request->get('inputEmail'))->count()):
+                return redirect()->back()->withErrors('E-mail ja cadastrado.');
+        }
 
         $user->name     = $request->get('inputName');
         $user->type_user= $request->get('inputFunction');
@@ -68,7 +75,7 @@ class AdmnistratorController extends Controller
         $user->save();
 
         $request->session()->flash(
-            'mensagem',
+            'success',
             "Usuário criado com sucesso!"
         );
 
@@ -115,9 +122,17 @@ class AdmnistratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        User::destroy($id);
+       try {
+        if (!User::destroy($id)) throw new Exception('Falha ao remover o usuário');
+        $request->session()->flash(
+            'success',
+            "Usuário removido sucesso!"
+        );
         return redirect()->back();
+       } catch (Exception $e) {
+        return redirect()->back()->withErrors($e->getMessage());
+       }
     }
 }

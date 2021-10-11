@@ -10,7 +10,7 @@
                 <div>
                 <h2 class="t-primary title-login mb-5">Solicite os materiais do seu almoxarifado de forma facilitada</h2>
                 </div>
-                @include('helpers.errors')
+                <div class="col-md-12 ml-2 mb-3">@include('helpers.errors')</div>
                 <form class="mt-1" method="post" action="{{route('auth.user')}}">
                     @csrf
                     <div class="form-group" id="main_form">

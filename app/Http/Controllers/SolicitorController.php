@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SolicitorRequest;
 use App\Models\Material;
 use App\Models\Request as Solicitor;
 use DateTime;
@@ -22,7 +23,7 @@ class SolicitorController extends Controller
         switch(true) {
             case (!is_null($queryByName)):
                 $requests = Solicitor::query()
-                                ->where('id', Auth::user()->id)
+                                ->where('users.id', Auth::user()->id)
                                 ->where('name', 'LIKE', "%{$queryByName}%")
                                 ->join('users', 'requests.user_id', '=', 'users.id')
                                 ->select('users.name', 'users.id AS user_id', 'requests.id AS request_id', 'requests.status', 'requests.created_at')
@@ -50,10 +51,11 @@ class SolicitorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $materials = Material::all();
-        return view('solicitor.create_request', compact('materials'));
+        $success = $request->session()->get('success');
+        return view('solicitor.create_request', compact('materials', 'success'));
     }
 
     /**
@@ -62,17 +64,12 @@ class SolicitorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SolicitorRequest $request)
     {
-        $request->validate([
-            'inputMaterial' => 'required'
-        ]);
-
-        $checkeds = $request->get('inputMaterial');
         $data = [];
         $userId = Auth::user()->id;
 
-        foreach ($checkeds as $id => $name) {
+        foreach ($request->get('inputMaterial') as $id => $name) {
            array_push($data, [
                 'id' => $id,
                 'name' => $name,
@@ -86,6 +83,11 @@ class SolicitorController extends Controller
         $solicitation->created_at = new DateTime();
         $solicitation->user_id    = $userId;
         $solicitation->save();
+
+        $request->session()->flash(
+            'success',
+            "Solicitação criada com sucesso!"
+        );
 
         return redirect()->back();
     }

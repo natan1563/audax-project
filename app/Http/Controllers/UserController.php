@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,11 +12,7 @@ class UserController extends Controller
         return view("login");
     }
 
-    public function auth(Request $request) {
-        $this->validate($request, [
-            'input_email' => 'required|email',
-            'input_password' => 'required',
-        ]);
+    public function auth(LoginRequest $request) {
 
         $bindCredentials = [
             'email' => $request->input_email,
@@ -25,7 +22,7 @@ class UserController extends Controller
         if(!Auth::attempt($bindCredentials)) {
             return redirect()
                     ->back()
-                    ->withErrors('E-mail ou senha inválida');
+                    ->withErrors('E-mail e/ou senha inválida');
         }
 
         switch(Auth::user()->type_user) {

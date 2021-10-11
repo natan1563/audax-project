@@ -37,6 +37,11 @@
             width: 36px;
             height: 36px;
         }
+        #inputFunction {
+            max-height: 37px;
+            text-align-last: center;
+            padding: 0;
+        }
         .titleModule {
             font-family: 'Open Sans';
             font-style: normal;

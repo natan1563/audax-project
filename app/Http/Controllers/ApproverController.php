@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApproverRequest;
 use App\Models\Material;
 use App\Models\Request as Solicitor;
 use Illuminate\Http\Request;
@@ -68,36 +69,54 @@ class ApproverController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $requests = Solicitor::find($id);
         $materials = Material::all();
         $materialsSelected = json_decode($requests->materials, true);
 
-        return view('approver.request_details',compact('requests', 'materials', 'materialsSelected'));
+        $success = $request->session()->get('success');
+
+        return
+        view('approver.request_details',
+        compact(
+            'requests',
+            'materials',
+            'materialsSelected',
+            'success'
+        ));
     }
 
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
         $solicitor = Solicitor::find($id);
         $solicitor->status = 'approved';
         $solicitor->approver_id = Auth::user()->id;
         $solicitor->save();
 
+        $request->session()->flash(
+            'success',
+            "Solicitação aprovada!"
+        );
+
         return redirect()->back();
     }
 
-    public function reprove(Request $request, $id)
+    public function reprove(ApproverRequest $request, $id)
     {
-        $request->validate([
-            'inputObservation' => 'required|min:1'
-        ]);
-
         $solicitor = Solicitor::find($id);
+        $solicitorName = $solicitor->name;
+        dd($solicitorName);
+
         $solicitor->status = 'reproved';
         $solicitor->observation = $request->get('inputObservation');
         $solicitor->approver_id = Auth::user()->id;
         $solicitor->save();
+
+        $request->session()->flash(
+            'success',
+            "Solicitação reprovada!"
+        );
 
         return redirect()->back();
     }
