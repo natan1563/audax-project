@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Material;
 use App\Models\Request as Solicitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ApproverController extends Controller
 {
@@ -80,7 +81,22 @@ class ApproverController extends Controller
     {
         $solicitor = Solicitor::find($id);
         $solicitor->status = 'approved';
-        $solicitor->approver_id = 1; // TROCAR PELO DA SESSAO
+        $solicitor->approver_id = Auth::user()->id;
+        $solicitor->save();
+
+        return redirect()->back();
+    }
+
+    public function reprove(Request $request, $id)
+    {
+        $request->validate([
+            'inputObservation' => 'required|min:1'
+        ]);
+
+        $solicitor = Solicitor::find($id);
+        $solicitor->status = 'reproved';
+        $solicitor->observation = $request->get('inputObservation');
+        $solicitor->approver_id = Auth::user()->id;
         $solicitor->save();
 
         return redirect()->back();

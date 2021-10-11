@@ -21,13 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [UserController::class, 'login']);
 
 Route::post('/auth', [UserController::class, 'auth'])->name('auth.user');
+Route::get('/logout', [UserController::class, 'logout']);
 
-Route::resource('/users', AdmnistratorController::class);
+Route::resource('/users', AdmnistratorController::class)->middleware('can:admin');
 
-Route::resource('/materials', MaterialController::class);
+Route::resource('/materials', MaterialController::class)->middleware('can:admin');
 
-Route::resource('/solicitor', SolicitorController::class);
+Route::resource('/solicitor', SolicitorController::class)->middleware('can:solicitor');
 
-Route::resource('/approver', ApproverController::class);
-
-Route::get('/approver/aprove/{id}', [ApproverController::class, 'approve']);
+Route::resource('/approver', ApproverController::class)->middleware('can:approver');
+Route::get('/approver/aprove/{id}', [ApproverController::class, 'approve'])->middleware('can:approver');
+Route::post('/approver/reprove/{id}', [ApproverController::class, 'reprove'])->middleware('can:approver');

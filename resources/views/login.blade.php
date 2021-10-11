@@ -10,13 +10,7 @@
                 <div>
                 <h2 class="t-primary title-login mb-5">Solicite os materiais do seu almoxarifado de forma facilitada</h2>
                 </div>
-
-                @if(session('danger'))
-                    <div class="alert-danger d-block mt-3 w-100 text-center">
-                        <p>{{session('danger')}}</p>
-                    </div>
-                @endif
-
+                @include('helpers.errors')
                 <form class="mt-1" method="post" action="{{route('auth.user')}}">
                     @csrf
                     <div class="form-group" id="main_form">

@@ -29,4 +29,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(Request::class);
     }
+
+    public function isAdmin()
+    {
+        return $this->type_user == 'admin';
+    }
+
+    public function isSolicitor()
+    {
+        return $this->type_user == 'solicitor';
+    }
+
+    public function isApprover()
+    {
+        return $this->type_user == 'approver';
+    }
 }

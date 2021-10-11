@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MaterialRequest;
 use App\Models\Material;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MaterialController extends Controller
 {
@@ -59,7 +60,7 @@ class MaterialController extends Controller
         $material = new Material; // MENSAGEM DE EMAIL DUPLICADO
 
         $material->name = $request->get('inputName');
-        $material->user_id = 57; // TROCAR
+        $material->user_id = Auth::user()->id; // TROCAR
         $material->save();
 
         $request->session()->flash(

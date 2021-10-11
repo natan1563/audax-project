@@ -7,7 +7,7 @@
     </div>
 
     <div class="row mt-5">
-        <a href="#" class="d-flex col">
+        <a href="/logout" class="d-flex col">
             <img src="{{ asset('icons/sair_icone.svg') }}" class="pr-3" alt="Adicionar usuario">
             <span>Sair</span>
         </a>

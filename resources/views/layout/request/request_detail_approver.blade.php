@@ -20,13 +20,12 @@
         <p class="pl-1">@include('layout.status', ['status' => $requests->status])</p>
     </div>
 
-    <form class="col mt-3">
+    <form action="/approver/reprove/{{$requests->id}}" method="post" class="col mt-3">
+        @csrf
         <p>Observação:</p>
         <div class="row">
             @if (empty($requests->observation) && $requests->status == 'waiting')
-                <textarea class="border" id="inputObservation" name="inputObservation" required cols="5" rows="5">
-
-                </textarea>
+                <textarea class="border" id="inputObservation" name="inputObservation" cols="5" rows="5" required></textarea>
             @else
                 <textarea id="inputObservation" cols="5" rows="5" disabled>
                 {{ $requests->observation }}

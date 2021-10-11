@@ -22,10 +22,28 @@ class UserController extends Controller
             'password' => $request->input_password
         ];
 
-        if(Auth::attempt($bindCredentials)) {
-            return redirect('/admin');
+        if(!Auth::attempt($bindCredentials)) {
+            return redirect()
+                    ->back()
+                    ->withErrors('E-mail ou senha inválida');
         }
 
-        return redirect()->back()->with('danger', 'E-mail ou senha inválida');
+        switch(Auth::user()->type_user) {
+            case ('admin'):
+                return redirect('/users');
+            case ('solicitor'):
+                return redirect('/solicitor');
+            case ('approver'):
+                return redirect('/approver');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }
